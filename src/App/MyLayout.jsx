@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {
   createLayout,
   createLayoutArea
-} from '../Utils/Layout';
+} from '../Utils/ReactPreposition';
 
 const Base: ComponentType<{ bgColor: string }> = styled.div`
   flex: 1 0 auto;

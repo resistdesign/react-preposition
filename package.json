@@ -2,9 +2,12 @@
   "name": "react-preposition",
   "version": "0.0.0",
   "description": "Create React layouts with predetermined positions.",
-  "main": "index.js",
+  "main": "src/Utils/ReactPreposition.jsx",
+  "files": [
+    "src/Utils/ReactPreposition.jsx"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "doc": "rdx compile -a ./src/index.html -c ./src -o ./docs"
   },
   "author": "",
   "license": "ISC",
