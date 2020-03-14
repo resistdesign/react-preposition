@@ -7,7 +7,7 @@
     "src/Utils/ReactPreposition.jsx"
   ],
   "scripts": {
-    "doc": "rdx compile -a ./src/index.html -c ./src -o ./docs"
+    "site": "rdx compile -o docs && cp CNAME ./docs/CNAME"
   },
   "author": "Resist Design",
   "license": "MIT",
