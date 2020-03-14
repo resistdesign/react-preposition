@@ -9,8 +9,8 @@
   "scripts": {
     "doc": "rdx compile -a ./src/index.html -c ./src -o ./docs"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Resist Design",
+  "license": "MIT",
   "dependencies": {
     "react": "^16.13.0"
   },
@@ -18,5 +18,18 @@
     "flow-bin": "^0.120.1",
     "react-dom": "^16.13.0",
     "styled-components": "^5.0.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/resistdesign/react-preposition.git"
+  },
+  "bugs": {
+    "url": "https://github.com/resistdesign/react-preposition/issues"
+  },
+  "homepage": "https://github.com/resistdesign/react-preposition#readme",
+  "keywords": [
+    "React",
+    "Layout",
+    "Position"
+  ]
 }
