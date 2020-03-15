@@ -1,8 +1,9 @@
 import './App/Assets/Fonts/Gasalt/stylesheet.css';
-import React, {Fragment} from 'react';
+import React, {Component, ComponentType, Fragment} from 'react';
 import styled, {createGlobalStyle} from 'styled-components';
 import {
   Box,
+  CssBaseline,
   Typography
 } from '@material-ui/core';
 import {
@@ -15,23 +16,13 @@ import {hybrid} from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import {duotoneSpace} from 'react-syntax-highlighter/dist/esm/styles/prism';
 import JSONLanguage from 'react-syntax-highlighter/dist/esm/languages/hljs/json';
 import JSXLanguage from 'react-syntax-highlighter/dist/esm/languages/prism/jsx';
-import {ItemQueueProcessor} from './index';
-import Logo from './App/Assets/Graphics/Incarnate Logo Icon 2020.svg';
-import GHRepo from './App/Assets/Graphics/github-repo.svg';
-import GHRepoMessage from './App/Assets/Graphics/github-repo-message.svg';
-import SampleCode from '!raw!./Sample Code.txt';
+import GHRepo from '../App/Assets/Graphics/github-repo.svg';
+import GHRepoMessage from '../App/Assets/Graphics/github-repo-message.svg';
 
 SyntaxHighlighter.registerLanguage('json', JSONLanguage);
 PrismSyntaxHighlighter.registerLanguage('jsx', JSXLanguage);
 
 const THEME = createMuiTheme(SRACLMUITheme);
-export const ThemeBase = ({children} = {}) => (
-  <ThemeProvider
-    theme={THEME}
-  >
-    {children}
-  </ThemeProvider>
-);
 const GlobalStyle = createGlobalStyle`
   html,
   body,
@@ -101,10 +92,27 @@ const Title = styled(Typography).attrs(p => ({
 }))`
   
 `;
-const Area = styled.div`
+const SubSectionBox = styled.div`
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: stretch;
+  padding: 1em;
+  
+  & > * {
+    flex: 10 auto;
+  }
+`;
+
+//**********
+// Exports
+//**********
+
+export const Area = styled.div`
   padding: 2em;
 `;
-const SectionGrid = styled(Area)`
+export const SectionGrid = styled(Area)`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 4em;
@@ -118,20 +126,8 @@ const SectionGrid = styled(Area)`
     grid-template-columns: 1fr;
   }
 `;
-const SubSectionBox = styled.div`
-  flex: 1 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: stretch;
-  padding: 1em;
-  
-  & > * {
-    flex: 10 auto;
-  }
-`;
-const CodeBox = styled.div`
-  height: 10em;
+export const CodeBox: ComponentType<{ height: string }> = styled.div`
+  height: ${p => p.height || '10em'};
   overflow: auto;
   
   & > * {
@@ -139,10 +135,7 @@ const CodeBox = styled.div`
     margin: 0;
   }
 `;
-const OutputCodeBox = styled(CodeBox)`
-  height: 20em;
-`;
-const Section = ({title = '', children, ...props} = {}) => (
+export const Section = ({title = '', children, ...props} = {}) => (
   <Box
     display='flex'
     flexDirection='column'
@@ -162,14 +155,99 @@ export const SubSection = ({title = '', children, ...props} = {}) => (
     {children}
   </SubSectionBox>
 );
+export const CodeSample = ({language = 'jsx', children, ...props} = {}) => language === 'json' ?
+  (
+    <SyntaxHighlighter
+      language='json'
+      style={hybrid}
+      showLineNumbers
+      wrapLines
+      {...props}
+    >
+      {children}
+    </SyntaxHighlighter>
+  ) :
+  (
+    <PrismSyntaxHighlighter
+      language='jsx'
+      style={duotoneSpace}
+      showLineNumbers
+      wrapLines
+      {...props}
+    >
+      {children}
+    </PrismSyntaxHighlighter>
+  );
 
-export const Site = ({children} = {}) => (
-  <Fragment>
-    <GlobalStyle/>
-    <ThemeBase>
-      <Base>
-        {children}
-      </Base>
-    </ThemeBase>
-  </Fragment>
-);
+type AppBaseProps = {
+  logoSrc: string,
+  repoLink: string
+};
+
+export class AppBase<AppBaseProps> extends Component {
+  render() {
+    const {
+      logoSrc = '',
+      repoLink = '',
+      title = '',
+      subTitle = '',
+      children
+    } = this.props;
+
+    return (
+      <Fragment>
+        <GlobalStyle/>
+        <ThemeProvider
+          theme={THEME}
+        >
+          <CssBaseline/>
+          <Base
+            display='flex'
+            flexDirection='column'
+            alignItems='stretch'
+            justifyContent='flex-start'
+          >
+            <HeaderBox
+              display='flex'
+              flexDirection='row'
+              alignItems='center'
+              justifyContent='flex-start'
+            >
+              <LogoImg
+                src={logoSrc}
+              />
+              <Title
+                variant='h5'
+              >
+                {title}&nbsp;
+                <Title
+                  display='inline'
+                  variant='inherit'
+                  color='textSecondary'
+                >
+                  {subTitle}
+                </Title>
+              </Title>
+            </HeaderBox>
+            {children}
+            <GHRepoCorner>
+              <GHRepoAnchor
+                target='_blank'
+                href={repoLink}
+              >
+                <GHRepoMessageCornerImg
+                  src={GHRepoMessage}
+                />
+                <GHRepoCornerImg
+                  src={GHRepo}
+                />
+              </GHRepoAnchor>
+            </GHRepoCorner>
+          </Base>
+        </ThemeProvider>
+      </Fragment>
+    );
+  }
+}
+
+export default AppBase;
