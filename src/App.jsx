@@ -12,7 +12,10 @@ import AppBase from './Common/ResistDesignPackageSiteLayout';
 export class App extends Component {
   render() {
     return (
-      <AppBase>
+      <AppBase
+        preTitle='React'
+        title='Preposition'
+      >
         <MyLayout
           bgColor='#111111'
         >

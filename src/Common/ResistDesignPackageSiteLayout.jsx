@@ -1,5 +1,6 @@
-import './App/Assets/Fonts/Gasalt/stylesheet.css';
+import '../App/Assets/Fonts/Gasalt/stylesheet.css';
 import React, {Component, ComponentType, Fragment} from 'react';
+import type {ReactNode} from 'react';
 import styled, {createGlobalStyle} from 'styled-components';
 import {
   Box,
@@ -18,6 +19,7 @@ import JSONLanguage from 'react-syntax-highlighter/dist/esm/languages/hljs/json'
 import JSXLanguage from 'react-syntax-highlighter/dist/esm/languages/prism/jsx';
 import GHRepo from '../App/Assets/Graphics/github-repo.svg';
 import GHRepoMessage from '../App/Assets/Graphics/github-repo-message.svg';
+import ZapLogo from '../App/Assets/Graphics/zap-logo.svg';
 
 SyntaxHighlighter.registerLanguage('json', JSONLanguage);
 PrismSyntaxHighlighter.registerLanguage('jsx', JSXLanguage);
@@ -181,16 +183,21 @@ export const CodeSample = ({language = 'jsx', children, ...props} = {}) => langu
 
 type AppBaseProps = {
   logoSrc: string,
-  repoLink: string
+  repoLink: string,
+  preTitle: string,
+  title: string,
+  postTitle: string,
+  children: ReactNode
 };
 
-export class AppBase<AppBaseProps> extends Component {
+export class AppBase extends Component<AppBaseProps> {
   render() {
     const {
-      logoSrc = '',
+      logoSrc = ZapLogo,
       repoLink = '',
+      preTitle = '',
       title = '',
-      subTitle = '',
+      postTitle = '',
       children
     } = this.props;
 
@@ -219,14 +226,31 @@ export class AppBase<AppBaseProps> extends Component {
               <Title
                 variant='h5'
               >
-                {title}&nbsp;
-                <Title
-                  display='inline'
-                  variant='inherit'
-                  color='textSecondary'
-                >
-                  {subTitle}
-                </Title>
+                {!!preTitle ? (
+                  <Fragment>
+                    <Title
+                      display='inline'
+                      variant='inherit'
+                      color='textSecondary'
+                    >
+                      {preTitle}
+                    </Title>
+                    &nbsp;
+                  </Fragment>
+                ) : undefined}
+                {title}
+                {!!postTitle ? (
+                  <Fragment>
+                    &nbsp;
+                    <Title
+                      display='inline'
+                      variant='inherit'
+                      color='textSecondary'
+                    >
+                      {postTitle}
+                    </Title>
+                  </Fragment>
+                ) : undefined}
               </Title>
             </HeaderBox>
             {children}
