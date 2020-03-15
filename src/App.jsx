@@ -15,6 +15,7 @@ export class App extends Component {
       <AppBase
         preTitle='React'
         title='Preposition'
+        repoLink='https://github.com/resistdesign/react-preposition'
       >
         <MyLayout
           bgColor='#111111'
