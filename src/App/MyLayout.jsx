@@ -1,14 +1,13 @@
 import React from 'react';
 import {
   createLayout,
-  createLayoutArea
+  createLayoutPosition
 } from '../Utils/ReactPreposition';
 
-export const HeaderSection = createLayoutArea();
-
-export const LeftPanel = createLayoutArea();
-
-export const RightPanel = createLayoutArea();
+export const Over = createLayoutPosition();
+export const Left = createLayoutPosition();
+export const Right = createLayoutPosition();
+export const Under = createLayoutPosition();
 
 export const MyLayout = createLayout((props = {}) => {
   const panelStyle = {
@@ -28,7 +27,8 @@ export const MyLayout = createLayout((props = {}) => {
         flexDirection: 'column',
         alignItems: 'stretch',
         justifyContent: 'flex-start',
-        fontFamily: 'sans-serif'
+        fontFamily: 'sans-serif',
+        height: '50vh'
       }}
       {...props}
     >
@@ -43,7 +43,7 @@ export const MyLayout = createLayout((props = {}) => {
           color: 'white'
         }}
       >
-        <HeaderSection/>
+        <Over/>
       </div>
       <div
         style={{
@@ -60,7 +60,7 @@ export const MyLayout = createLayout((props = {}) => {
             color: 'blue'
           }}
         >
-          <LeftPanel/>
+          <Left/>
         </div>
         <div
           style={{
@@ -68,8 +68,21 @@ export const MyLayout = createLayout((props = {}) => {
             color: 'green'
           }}
         >
-          <RightPanel/>
+          <Right/>
         </div>
+      </div>
+      <div
+        style={{
+          flex: '1 0 auto',
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '0.5em',
+          color: 'white'
+        }}
+      >
+        <Under/>
       </div>
     </div>
   );

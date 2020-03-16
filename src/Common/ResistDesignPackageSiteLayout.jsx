@@ -1,7 +1,7 @@
 import '../App/Assets/Fonts/Gasalt/stylesheet.css';
 import React, {Component, ComponentType, Fragment} from 'react';
 import type {ReactNode} from 'react';
-import styled, {createGlobalStyle} from 'styled-components';
+import styled, {createGlobalStyle, css} from 'styled-components';
 import {
   Box,
   CssBaseline,
@@ -129,7 +129,7 @@ export const SectionGrid = styled(Area)`
   }
 `;
 export const CodeBox: ComponentType<{ height: string }> = styled.div`
-  height: ${p => p.height || '10em'};
+  ${p => p.height ? css`max-height: ${p.height};` : ''}
   overflow: auto;
   
   & > * {
@@ -157,29 +157,35 @@ export const SubSection = ({title = '', children, ...props} = {}) => (
     {children}
   </SubSectionBox>
 );
-export const CodeSample = ({language = 'jsx', children, ...props} = {}) => language === 'json' ?
-  (
-    <SyntaxHighlighter
-      language='json'
-      style={hybrid}
-      showLineNumbers
-      wrapLines
-      {...props}
-    >
-      {children}
-    </SyntaxHighlighter>
-  ) :
-  (
-    <PrismSyntaxHighlighter
-      language='jsx'
-      style={duotoneSpace}
-      showLineNumbers
-      wrapLines
-      {...props}
-    >
-      {children}
-    </PrismSyntaxHighlighter>
-  );
+export const CodeSample = ({language = 'jsx', height, children, ...props} = {}) => (
+  <CodeBox
+    height={height}
+  >
+    {language === 'json' ?
+      (
+        <SyntaxHighlighter
+          language='json'
+          style={hybrid}
+          showLineNumbers
+          wrapLines
+          {...props}
+        >
+          {children}
+        </SyntaxHighlighter>
+      ) :
+      (
+        <PrismSyntaxHighlighter
+          language='jsx'
+          style={duotoneSpace}
+          showLineNumbers
+          wrapLines
+          {...props}
+        >
+          {children}
+        </PrismSyntaxHighlighter>
+      )}
+  </CodeBox>
+);
 
 type AppBaseProps = {
   logoSrc: string,

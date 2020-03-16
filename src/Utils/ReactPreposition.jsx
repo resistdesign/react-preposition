@@ -5,25 +5,25 @@ const {
   Consumer: LayoutConsumer
 } = createContext();
 
-export const createLayoutArea = () => {
+export const createLayoutPosition = () => {
   const instId = {};
-  const LayoutArea = ({children} = {}) => (
+  const LayoutPosition = ({children} = {}) => (
     <LayoutConsumer>
-      {(areaMap = new Map()) => (
+      {(positionMap = new Map()) => (
         <Fragment>
-          {areaMap.get(instId)}
+          {positionMap.get(instId)}
         </Fragment>
       )}
     </LayoutConsumer>
   );
 
-  LayoutArea.instId = instId;
+  LayoutPosition.instId = instId;
 
-  return LayoutArea;
+  return LayoutPosition;
 };
 
 export const createLayout = (Layout) => ({children, ...props} = {}) => {
-  const areaMap = new Map();
+  const positionMap = new Map();
 
   Children
     .toArray(children)
@@ -33,17 +33,17 @@ export const createLayout = (Layout) => ({children, ...props} = {}) => {
                   instId
                 } = {},
                 props: {
-                  children: areaChildren
+                  children: positionChildren
                 } = {}
               } = {}) => {
       if (instId instanceof Object) {
-        areaMap.set(instId, areaChildren);
+        positionMap.set(instId, positionChildren);
       }
     });
 
   return (
     <LayoutProvider
-      value={areaMap}
+      value={positionMap}
     >
       <Layout
         {...props}
