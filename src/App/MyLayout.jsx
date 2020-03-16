@@ -1,44 +1,8 @@
-import React, {ComponentType} from 'react';
-import styled from 'styled-components';
+import React from 'react';
 import {
   createLayout,
   createLayoutArea
 } from '../Utils/ReactPreposition';
-
-const Base: ComponentType<{ bgColor: string }> = styled.div`
-  flex: 1 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: flex-start;
-  font-family: sans-serif;
-  background-color: ${p => p.bgColor || 'none'};
-`;
-const Header = styled.div`
-  flex: 1 0 auto;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  font-size: 5em;
-  color: white;
-`;
-const Content = styled.div`
-  flex: 1 0 auto;
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  justify-content: stretch;
-`;
-const Panel: ComponentType<{ color: string }> = styled.div`
-  flex: 1 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: 3em;
-  color: ${p => p.color || 'black'};
-`;
 
 export const HeaderSection = createLayoutArea();
 
@@ -46,18 +10,69 @@ export const LeftPanel = createLayoutArea();
 
 export const RightPanel = createLayoutArea();
 
-export const MyLayout: { bgColor: string } = createLayout((props = {}) => (
-  <Base
-    {...props}
-  >
-    <Header>
-      <HeaderSection/>
-    </Header>
-    <Content>
-      <Panel color='blue'><LeftPanel/></Panel>
-      <Panel color='green'><RightPanel/></Panel>
-    </Content>
-  </Base>
-));
+export const MyLayout = createLayout((props = {}) => {
+  const panelStyle = {
+    flex: '1 0 auto',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: '3em'
+  };
+
+  return (
+    <div
+      style={{
+        flex: '1 0 auto',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'stretch',
+        justifyContent: 'flex-start',
+        fontFamily: 'sans-serif'
+      }}
+      {...props}
+    >
+      <div
+        style={{
+          flex: '1 0 auto',
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '5em',
+          color: 'white'
+        }}
+      >
+        <HeaderSection/>
+      </div>
+      <div
+        style={{
+          flex: '1 0 auto',
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'stretch',
+          justifyContent: 'stretch'
+        }}
+      >
+        <div
+          style={{
+            ...panelStyle,
+            color: 'blue'
+          }}
+        >
+          <LeftPanel/>
+        </div>
+        <div
+          style={{
+            ...panelStyle,
+            color: 'green'
+          }}
+        >
+          <RightPanel/>
+        </div>
+      </div>
+    </div>
+  );
+});
 
 export default MyLayout;
