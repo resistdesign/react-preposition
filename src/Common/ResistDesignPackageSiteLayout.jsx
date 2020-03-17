@@ -154,7 +154,7 @@ const CodeBox: ComponentType<{ height: string, bigger: boolean }> = styled.div`
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-start;
-  font-size: ${p => !!p.bigger ? '1.5em' : '1em'};
+  font-size: ${p => !!p.bigger ? '1.23076923077em' : '1em'};
   ${p => p.height ? css`max-height: ${p.height};` : ''}
   
   & > * {
