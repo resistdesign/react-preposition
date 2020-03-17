@@ -1,5 +1,5 @@
 import {hot} from 'react-hot-loader';
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import MyLayout, {
   Over,
   Left,
@@ -19,7 +19,31 @@ export class App extends Component {
       <AppBase
         preTitle='React'
         title='Preposition'
-        description='Create React layouts with predetermined positions.'
+        description={(
+          <Fragment>
+            Create React layouts with&nbsp;
+            <svg viewBox="0 0 75 25" style={{
+              width: '2em',
+              marginLeft: '-0.25em',
+              marginRight: '-1.75em',
+              verticalAlign: 'bottom'
+            }}>
+              <path
+                d="M 0 25 L 0 22 C 30 18 45 16 75 20 C 40 21 30 23 0 25"
+                fill="#0096E4"
+              ></path>
+            </svg>
+            <span
+              style={{
+                color: '#FF9B00',
+                fontStyle: 'oblique'
+              }}
+            >pre</span>determined&nbsp;
+            <span style={{
+              color: '#FF9B00'
+            }}>positions</span>.
+          </Fragment>
+        )}
         repoLink='https://github.com/resistdesign/react-preposition'
       >
         <SectionGrid
