@@ -16,7 +16,8 @@ export const MyLayout = createLayout((props = {}) => {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: '3em'
+    fontSize: '2em',
+    width: '50%'
   };
 
   return (
@@ -39,8 +40,9 @@ export const MyLayout = createLayout((props = {}) => {
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',
-          fontSize: '5em',
-          color: 'white'
+          fontSize: '4em',
+          color: 'white',
+          backgroundColor: '#333333'
         }}
       >
         <Over/>
@@ -57,7 +59,8 @@ export const MyLayout = createLayout((props = {}) => {
         <div
           style={{
             ...panelStyle,
-            color: 'blue'
+            color: '#0096E4',
+            backgroundColor: '#111111'
           }}
         >
           <Left/>
@@ -65,7 +68,8 @@ export const MyLayout = createLayout((props = {}) => {
         <div
           style={{
             ...panelStyle,
-            color: 'green'
+            color: '#FF9B00',
+            backgroundColor: '#1c1c1c'
           }}
         >
           <Right/>
@@ -78,8 +82,9 @@ export const MyLayout = createLayout((props = {}) => {
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',
-          fontSize: '1em',
-          color: 'white'
+          fontSize: '1.25em',
+          color: 'white',
+          backgroundColor: '#232323'
         }}
       >
         <Under/>
