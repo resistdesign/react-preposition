@@ -23,13 +23,16 @@ export const MyLayout = createLayout((props = {}) => {
   return (
     <div
       style={{
-        flex: '1 0 auto',
+        flex: '0 0 auto',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'stretch',
         justifyContent: 'flex-start',
         fontFamily: 'sans-serif',
-        height: '50vh'
+        width: '30em',
+        height: '30em',
+        fontSize: '0.75em',
+        margin: 'auto'
       }}
       {...props}
     >

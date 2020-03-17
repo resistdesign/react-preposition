@@ -12,10 +12,6 @@ import AppBase, {
   SectionGrid,
   SubSection
 } from './Common/ResistDesignPackageSiteLayout';
-import {
-  Card,
-  CardContent
-} from '@material-ui/core';
 
 export class App extends Component {
   render() {
@@ -23,8 +19,53 @@ export class App extends Component {
       <AppBase
         preTitle='React'
         title='Preposition'
+        description='Create React layouts with predetermined positions.'
         repoLink='https://github.com/resistdesign/react-preposition'
       >
+        <SectionGrid
+          cols={2}
+        >
+          <Section
+            title='Write this:'
+          >
+            <SubSection>
+              <CodeSample
+                language='jsx'
+                showLineNumbers={false}
+              >
+                {`// Layout
+
+export const Over = createLayoutPosition();
+export const Left = createLayoutPosition();
+export const Right = createLayoutPosition();
+export const Under = createLayoutPosition();
+
+export const MyLayout = createLayout((props = {}) => (<div>...</div>);
+
+// App
+
+<MyLayout>
+  <Over>Header</Over>
+  <Left>Left</Left>
+  <Right>Right</Right>
+  <Under>Where?</Under>
+</MyLayout>`}
+              </CodeSample>
+            </SubSection>
+          </Section>
+          <Section
+            title='Get this:'
+          >
+            <SubSection>
+              <MyLayout>
+                <Over>Header</Over>
+                <Left>Left</Left>
+                <Right>Right</Right>
+                <Under>Where?</Under>
+              </MyLayout>
+            </SubSection>
+          </Section>
+        </SectionGrid>
         <SectionGrid
           title='Install'
           cols={1}
@@ -147,26 +188,6 @@ const App => (props = {}) => (
   </MyLayout>
 );`}
               </CodeSample>
-            </SubSection>
-          </Section>
-        </SectionGrid>
-        <SectionGrid
-          cols={1}
-        >
-          <Section
-            title='Demo'
-          >
-            <SubSection>
-              <Card>
-                <CardContent>
-                  <MyLayout>
-                    <Over>Header</Over>
-                    <Left>Left</Left>
-                    <Right>Right</Right>
-                    <Under>Where?</Under>
-                  </MyLayout>
-                </CardContent>
-              </Card>
             </SubSection>
           </Section>
         </SectionGrid>

@@ -98,6 +98,13 @@ const Title = styled(Typography).attrs(p => ({
 }))`
   
 `;
+const Description = styled(Typography).attrs(p => ({className: 'site-layout-description'}))`
+  text-align: center;
+  
+  &.site-layout-description {
+    margin: 0 0 2em 0;
+  }
+`;
 const SectionTitle = styled(Typography)`
   flex: 0 0 auto;
 `;
@@ -125,7 +132,7 @@ export const AreaBase = styled.div`
     padding-bottom: 2em;
   }
 `;
-const SectionGridTitle = styled(SectionTitle).attrs(p => ({className: 'section-grid-title'}))`
+const AreaTitle = styled(SectionTitle).attrs(p => ({className: 'section-grid-title'}))`
   &.section-grid-title {
     margin: 0 0 1em 0;
   }
@@ -167,7 +174,7 @@ const CodeBox: ComponentType<{ height: string, bigger: boolean }> = styled.div`
 // Exports
 //**********
 
-export const SectionGrid: ComponentType<{
+export const Area: ComponentType<{
   title: string,
   children: ReactNode
 }> = ({
@@ -175,14 +182,31 @@ export const SectionGrid: ComponentType<{
         children,
         ...props
       } = {}) => (
-  <AreaBase>
-    {!!title ? (<SectionGridTitle variant='h6'>{title}</SectionGridTitle>) : undefined}
+  <AreaBase
+    {...props}
+  >
+    {!!title ? (<AreaTitle variant='h6'>{title}</AreaTitle>) : undefined}
+    {children}
+  </AreaBase>
+);
+export const SectionGrid: ComponentType<{
+  title: string,
+  cols: 1 | 2 | 3,
+  children: ReactNode
+}> = ({
+        cols = 3,
+        children,
+        ...props
+      } = {}) => (
+  <Area
+    {...props}
+  >
     <SectionGridContent
-      {...props}
+      cols={cols}
     >
       {children}
     </SectionGridContent>
-  </AreaBase>
+  </Area>
 );
 export const Section = ({title = '', children, ...props} = {}) => (
   <Box
@@ -247,9 +271,10 @@ export const CodeSample: ComponentType<{
 type AppBaseProps = {
   logoSrc: string,
   repoLink: string,
-  preTitle: string,
-  title: string,
-  postTitle: string,
+  preTitle: ReactNode,
+  title: ReactNode,
+  postTitle: ReactNode,
+  description: ReactNode,
   children: ReactNode
 };
 
@@ -261,6 +286,7 @@ export class AppBase extends Component<AppBaseProps> {
       preTitle = '',
       title = '',
       postTitle = '',
+      description = '',
       children
     } = this.props;
 
@@ -316,6 +342,13 @@ export class AppBase extends Component<AppBaseProps> {
                 ) : undefined}
               </Title>
             </HeaderBox>
+            {!!description ? (
+              <Area>
+                <Description>
+                  {description}
+                </Description>
+              </Area>
+            ) : undefined}
             {children}
           </Base>
           <GHRepoCorner>
