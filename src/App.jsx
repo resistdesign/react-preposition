@@ -64,7 +64,7 @@ export const Left = createLayoutPosition();
 export const Right = createLayoutPosition();
 export const Under = createLayoutPosition();
 
-export const MyLayout = createLayout((props = {}) => (<div>...</div>);
+export const MyLayout = createLayout((props = {}) => (<div>...</div>));
 
 // App
 
