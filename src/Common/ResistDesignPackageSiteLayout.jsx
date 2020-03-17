@@ -13,15 +13,19 @@ import {
 } from '@material-ui/core/styles';
 import SRACLMUITheme from '@resistdesign/sracl-mui-theme';
 import {Light as SyntaxHighlighter, PrismLight as PrismSyntaxHighlighter} from 'react-syntax-highlighter';
-import {hybrid} from 'react-syntax-highlighter/dist/esm/styles/hljs';
-import {duotoneSpace} from 'react-syntax-highlighter/dist/esm/styles/prism';
+import {hybrid as StandardCodeTheme} from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import {okaidia as PrismCodeTheme} from 'react-syntax-highlighter/dist/esm/styles/prism';
 import JSONLanguage from 'react-syntax-highlighter/dist/esm/languages/hljs/json';
+import BashLanguage from 'react-syntax-highlighter/dist/esm/languages/hljs/bash';
+import PlainTextLanguage from 'react-syntax-highlighter/dist/esm/languages/hljs/plaintext';
 import JSXLanguage from 'react-syntax-highlighter/dist/esm/languages/prism/jsx';
 import GHRepo from '../App/Assets/Graphics/github-repo.svg';
 import GHRepoMessage from '../App/Assets/Graphics/github-repo-message.svg';
 import ZapLogo from '../App/Assets/Graphics/zap-logo.svg';
 
+SyntaxHighlighter.registerLanguage('plaintext', PlainTextLanguage);
 SyntaxHighlighter.registerLanguage('json', JSONLanguage);
+SyntaxHighlighter.registerLanguage('bash', BashLanguage);
 PrismSyntaxHighlighter.registerLanguage('jsx', JSXLanguage);
 
 const THEME = createMuiTheme(SRACLMUITheme);
@@ -94,6 +98,14 @@ const Title = styled(Typography).attrs(p => ({
 }))`
   
 `;
+const SectionTitle = styled(Typography)`
+  flex: 0 0 auto;
+`;
+const SubSectionTitle = styled(SectionTitle).attrs(p => ({className: 'sub-section-title'}))`
+  &.sub-section-title {
+    margin: 0 0 1em 0;
+  }
+`;
 const SubSectionBox = styled.div`
   flex: 1 0 auto;
   display: flex;
@@ -102,8 +114,52 @@ const SubSectionBox = styled.div`
   justify-content: stretch;
   padding: 1em;
   
+  & > *:not(${SectionTitle}) {
+    flex: 1 0 auto;
+  }
+`;
+export const AreaBase = styled.div`
+  padding: 2em 2em 0 2em;
+  
+  &:last-child {
+    padding-bottom: 2em;
+  }
+`;
+const SectionGridTitle = styled(SectionTitle).attrs(p => ({className: 'section-grid-title'}))`
+  &.section-grid-title {
+    margin: 0 0 1em 0;
+  }
+`;
+const SectionGridContent: ComponentType<{ cols: 1 | 2 | 3 }> = styled.div`
+  display: grid;
+  grid-template-columns: ${p => [...new Array(p.cols || 3)].map(x => '1fr').join(' ')};
+  grid-gap: 1em;
+  box-sizing: border-box;
+  
+  @media (max-width: 1024px) {
+    grid-template-columns: ${p => [...new Array(((p.cols || 3) - 1) || 1)].map(x => '1fr').join(' ')};
+  }
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+`;
+const CodeBox: ComponentType<{ height: string, bigger: boolean }> = styled.div`
+  overflow: auto;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  font-size: ${p => !!p.bigger ? '1.5em' : '1em'};
+  ${p => p.height ? css`max-height: ${p.height};` : ''}
+  
   & > * {
-    flex: 10 auto;
+    flex: 1 1 auto;
+    margin: 0 !important;
   }
 `;
 
@@ -111,32 +167,23 @@ const SubSectionBox = styled.div`
 // Exports
 //**********
 
-export const Area = styled.div`
-  padding: 2em;
-`;
-export const SectionGrid = styled(Area)`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 4em;
-  box-sizing: border-box;
-  
-  @media (max-width: 1024px) {
-    grid-template-columns: 1fr 1fr;
-  }
-  
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
-`;
-export const CodeBox: ComponentType<{ height: string }> = styled.div`
-  ${p => p.height ? css`max-height: ${p.height};` : ''}
-  overflow: auto;
-  
-  & > * {
-    min-height: 100%;
-    margin: 0;
-  }
-`;
+export const SectionGrid: ComponentType<{
+  title: string,
+  children: ReactNode
+}> = ({
+        title = '',
+        children,
+        ...props
+      } = {}) => (
+  <AreaBase>
+    {!!title ? (<SectionGridTitle variant='h6'>{title}</SectionGridTitle>) : undefined}
+    <SectionGridContent
+      {...props}
+    >
+      {children}
+    </SectionGridContent>
+  </AreaBase>
+);
 export const Section = ({title = '', children, ...props} = {}) => (
   <Box
     display='flex'
@@ -145,7 +192,7 @@ export const Section = ({title = '', children, ...props} = {}) => (
     justifyContent='stretch'
     {...props}
   >
-    {!!title ? (<Typography variant='h6'>{title}</Typography>) : undefined}
+    {!!title ? (<SectionTitle variant='h6'>{title}</SectionTitle>) : undefined}
     {children}
   </Box>
 );
@@ -153,19 +200,29 @@ export const SubSection = ({title = '', children, ...props} = {}) => (
   <SubSectionBox
     {...props}
   >
-    {!!title ? (<Typography>{title}</Typography>) : undefined}
+    {!!title ? (<SubSectionTitle>{title}</SubSectionTitle>) : undefined}
     {children}
   </SubSectionBox>
 );
-export const CodeSample = ({language = 'jsx', height, children, ...props} = {}) => (
+export const CodeSample: ComponentType<{
+  language: 'plaintext' | 'bash' | 'json' | 'jsx',
+  height: string,
+  children: ReactNode
+}> = ({
+        language = 'plaintext',
+        height,
+        children,
+        ...props
+      } = {}) => (
   <CodeBox
     height={height}
+    bigger={language === 'plaintext' || language === 'bash'}
   >
-    {language === 'json' ?
+    {language !== 'jsx' ?
       (
         <SyntaxHighlighter
-          language='json'
-          style={hybrid}
+          language={language}
+          style={StandardCodeTheme}
           showLineNumbers
           wrapLines
           {...props}
@@ -176,7 +233,7 @@ export const CodeSample = ({language = 'jsx', height, children, ...props} = {}) 
       (
         <PrismSyntaxHighlighter
           language='jsx'
-          style={duotoneSpace}
+          style={PrismCodeTheme}
           showLineNumbers
           wrapLines
           {...props}
@@ -260,20 +317,20 @@ export class AppBase extends Component<AppBaseProps> {
               </Title>
             </HeaderBox>
             {children}
-            <GHRepoCorner>
-              <GHRepoAnchor
-                target='_blank'
-                href={repoLink}
-              >
-                <GHRepoMessageCornerImg
-                  src={GHRepoMessage}
-                />
-                <GHRepoCornerImg
-                  src={GHRepo}
-                />
-              </GHRepoAnchor>
-            </GHRepoCorner>
           </Base>
+          <GHRepoCorner>
+            <GHRepoAnchor
+              target='_blank'
+              href={repoLink}
+            >
+              <GHRepoMessageCornerImg
+                src={GHRepoMessage}
+              />
+              <GHRepoCornerImg
+                src={GHRepo}
+              />
+            </GHRepoAnchor>
+          </GHRepoCorner>
         </ThemeProvider>
       </Fragment>
     );

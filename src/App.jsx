@@ -7,9 +7,9 @@ import MyLayout, {
   Under
 } from './App/MyLayout';
 import AppBase, {
-  Area,
   CodeSample,
-  Section, SectionGrid,
+  Section,
+  SectionGrid,
   SubSection
 } from './Common/ResistDesignPackageSiteLayout';
 import {
@@ -25,17 +25,26 @@ export class App extends Component {
         title='Preposition'
         repoLink='https://github.com/resistdesign/react-preposition'
       >
-        <Area>
-          <Section
-            title='Install'
-          >
+        <SectionGrid
+          title='Install'
+          cols={1}
+        >
+          <Section>
             <SubSection>
-              <code>npm i -S react-preposition</code>
+              <CodeSample
+                language='bash'
+                showLineNumbers={false}
+              >
+                npm i -S react-preposition
+              </CodeSample>
             </SubSection>
           </Section>
-          <Section
-            title='Usage'
-          >
+        </SectionGrid>
+        <SectionGrid
+          title='Usage'
+          cols={2}
+        >
+          <Section>
             <SubSection
               title='First import React and the higher order functions:'
             >
@@ -50,6 +59,8 @@ import {
 } from '../Utils/ReactPreposition';`}
               </CodeSample>
             </SubSection>
+          </Section>
+          <Section>
             <SubSection
               title={`Then create the positions you'll use in your layout:`}
             >
@@ -64,88 +75,42 @@ export const Under = createLayoutPosition();`}
               </CodeSample>
             </SubSection>
           </Section>
-        </Area>
-        <SectionGrid>
-          <SubSection
-            title={`Then add your positions anywhere you want in your layout:`}
-          >
-            <CodeSample
-              language='jsx'
-              height='25em'
+          <Section>
+            <SubSection
+              title={`Then add your positions anywhere you want in your layout:`}
             >
-              {`// MyLayout.jsx
+              <CodeSample
+                language='jsx'
+                height='30em'
+              >
+                {`// MyLayout.jsx
 export const MyLayout = createLayout((props = {}) => {
-  const panelStyle = {
-    flex: '1 0 auto',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: '3em'
-  };
-
   return (
     <div
-      style={{
-        flex: '1 0 auto',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'stretch',
-        justifyContent: 'flex-start',
-        fontFamily: 'sans-serif',
-        height: '50vh'
-      }}
+      style={{...}}
       {...props}
     >
       <div
-        style={{
-          flex: '1 0 auto',
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: '5em',
-          color: 'white'
-        }}
+        style={{...}}
       >
         <Over/>
       </div>
       <div
-        style={{
-          flex: '1 0 auto',
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'stretch',
-          justifyContent: 'stretch'
-        }}
+        style={{...}}
       >
         <div
-          style={{
-            ...panelStyle,
-            color: 'blue'
-          }}
+          style={{...}}
         >
           <Left/>
         </div>
         <div
-          style={{
-            ...panelStyle,
-            color: 'green'
-          }}
+          style={{...}}
         >
           <Right/>
         </div>
       </div>
       <div
-        style={{
-          flex: '1 0 auto',
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: '0.5em',
-          color: 'white'
-        }}
+        style={{...}}
       >
         <Under/>
       </div>
@@ -154,15 +119,17 @@ export const MyLayout = createLayout((props = {}) => {
 });
 
 export default MyLayout;`}
-            </CodeSample>
-          </SubSection>
-          <SubSection
-            title={`Now use your layout in your app:`}
-          >
-            <CodeSample
-              language='jsx'
+              </CodeSample>
+            </SubSection>
+          </Section>
+          <Section>
+            <SubSection
+              title={`Now use your layout in your app:`}
             >
-              {`// App.jsx
+              <CodeSample
+                language='jsx'
+              >
+                {`// App.jsx
 import React, {Component} from 'react';
 import MyLayout, {
   Over,
@@ -179,22 +146,29 @@ const App => (props = {}) => (
     <Under>Where?</Under>
   </MyLayout>
 );`}
-            </CodeSample>
-          </SubSection>
-          <SubSection
-            title='And it looks like this:'
+              </CodeSample>
+            </SubSection>
+          </Section>
+        </SectionGrid>
+        <SectionGrid
+          cols={1}
+        >
+          <Section
+            title='Demo'
           >
-            <Card>
-              <CardContent>
-                <MyLayout>
-                  <Over>Header</Over>
-                  <Left>Left</Left>
-                  <Right>Right</Right>
-                  <Under>Where?</Under>
-                </MyLayout>
-              </CardContent>
-            </Card>
-          </SubSection>
+            <SubSection>
+              <Card>
+                <CardContent>
+                  <MyLayout>
+                    <Over>Header</Over>
+                    <Left>Left</Left>
+                    <Right>Right</Right>
+                    <Under>Where?</Under>
+                  </MyLayout>
+                </CardContent>
+              </Card>
+            </SubSection>
+          </Section>
         </SectionGrid>
       </AppBase>
     );

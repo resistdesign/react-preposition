@@ -78,7 +78,7 @@ export const MyLayout = createLayout((props = {}) => {
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',
-          fontSize: '0.5em',
+          fontSize: '1em',
           color: 'white'
         }}
       >
