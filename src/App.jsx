@@ -16,6 +16,15 @@ import AppBase, {
 } from './Common/ResistDesignPackageSiteLayout';
 import ZapLogo from './App/Assets/Graphics/zap-logo.svg';
 
+const FooterLogoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 3em;
+  height: 1em;
+  overflow: visible;
+`;
 const FooterLogo = styled.img`
   width: 3em;
 `;
@@ -224,7 +233,13 @@ const App => (props = {}) => (
         </SectionGrid>
         <Footer
           name='Resist Design'
-          icon={<FooterLogo src={ZapLogo}/>}
+          icon={(
+            <FooterLogoContainer>
+              <FooterLogo
+                src={ZapLogo}
+              />
+            </FooterLogoContainer>
+          )}
           showCopyright
           bgColor='#333333'
         >

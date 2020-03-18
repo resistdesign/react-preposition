@@ -216,6 +216,10 @@ const FooterIcon = styled.span.attrs(p => ({className: `${p.className} drawic`})
 const FooterImageIcon = styled.img`
   width: 1em;
 `;
+const FooterCopyrightText = styled.span`
+  font-size: 0.75em;
+  opacity: 0.5;
+`;
 const FooterLink = ({
                       href = '',
                       icon,
@@ -395,18 +399,23 @@ export const Footer: ComponentType<FooterProps> = ({
     <Section>
       <SubSection
         alignItems='center'
-        justifyContent='space-between'
+        justifyContent='flex-end'
       >
-        <FooterBaseText/>
         <FooterLink
           href={webAddressLink}
           icon={icon}
         >
-          {name}
+          {name}{!!showCopyright ? (
+          <FooterCopyrightText>
+            {!!name || !!icon ? (
+              <Fragment>
+                &nbsp;
+              </Fragment>
+            ) : undefined}
+            ©&nbsp;{CURRENT_FULL_YEAR}
+          </FooterCopyrightText>
+        ) : undefined}
         </FooterLink>
-        {!!showCopyright ? (
-          <FooterBaseText>© {CURRENT_FULL_YEAR}</FooterBaseText>
-        ) : (<FooterBaseText/>)}
       </SubSection>
     </Section>
     <Section>
