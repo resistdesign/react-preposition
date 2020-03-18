@@ -12,6 +12,7 @@
   "author": "Resist Design",
   "license": "MIT",
   "dependencies": {
+    "@material-ui/icons": "^4.9.1",
     "react": "^16.13.0"
   },
   "devDependencies": {

@@ -242,8 +242,15 @@ const App => (props = {}) => (
           )}
           showCopyright
           bgColor='#333333'
+          webAddressLink='https://resist.design'
+          issuesLink='https://github.com/resistdesign/react-preposition/issues'
+          githubLink='https://github.com/resistdesign'
+          twitterLink='https://twitter.com/resistdesign'
+          youtubeLink='https://www.youtube.com/channel/UCahEtsliyJbi-o4TR50Bcfw'
         >
-          Sweet!
+          <small>
+            Feedback is always welcome.
+          </small>
         </Footer>
       </AppBase>
     );

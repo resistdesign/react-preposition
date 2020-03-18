@@ -12,6 +12,7 @@ import {
   createMuiTheme,
   ThemeProvider
 } from '@material-ui/core/styles';
+import IssuesIcon from '@material-ui/icons/InfoOutlined';
 import SRACLMUITheme from '@resistdesign/sracl-mui-theme';
 import {Light as SyntaxHighlighter, PrismLight as PrismSyntaxHighlighter} from 'react-syntax-highlighter';
 import {hybrid as StandardCodeTheme} from 'react-syntax-highlighter/dist/esm/styles/hljs';
@@ -214,7 +215,7 @@ const FooterIcon = styled.span.attrs(p => ({className: `${p.className} drawic`})
   &:after {
     content: ' ';
     white-space: pre;
-    font-size: 0.5em;
+    font-size: 0.25em;
   }
 `;
 const FooterImageIcon = styled.img`
@@ -229,7 +230,7 @@ const FooterLink = ({
                       icon,
                       children,
                       ...props
-                    } = {}) => !!href || true ? (
+                    } = {}) => !!href ? (
   <FooterLinkAnchor
     href={href}
     {...props}
@@ -393,8 +394,13 @@ export const Footer: ComponentType<FooterProps> = ({
       >
         <FooterLink
           href={issuesLink}
+          icon={<IssuesIcon
+            style={{
+              fontSize: '2em'
+            }}
+          />}
         >
-          Issues
+          &nbsp;Issues
         </FooterLink>
         <FooterBaseText>
           {children}
