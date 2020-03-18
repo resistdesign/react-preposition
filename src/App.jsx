@@ -17,6 +17,7 @@ import AppBase, {
   SectionGrid,
   SubSection
 } from './Common/ResistDesignPackageSiteLayout';
+import ReactPrepositionLogo from './App/Assets/Graphics/React Preposition Logo 2020.svg';
 import ZapLogo from './App/Assets/Graphics/zap-logo.svg';
 
 const FooterLogoContainer = styled.div`
@@ -38,6 +39,7 @@ export class App extends Component {
       <AppBase
         preTitle='React'
         title='Preposition'
+        logoSrc={ReactPrepositionLogo}
         repoLink='https://github.com/resistdesign/react-preposition'
       >
         <SectionGrid
