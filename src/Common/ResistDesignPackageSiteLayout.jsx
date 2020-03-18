@@ -188,7 +188,7 @@ const FooterLinkAnchor = styled.a`
   flex: 0 0 auto;
   text-decoration: none;
   color: inherit;
-  padding: 0.5em;
+  padding: 0.5em 0 0.5em 0;
   
   &:first-child {
     padding-top: 0;
