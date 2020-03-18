@@ -128,7 +128,8 @@ const SubSectionBox: ComponentType<{ alignItems: string, justifyContent: string 
     ${p => p.justifyContent === 'stretch' ? css`flex: 1 0 auto;` : ''}
   }
 `;
-export const AreaBase: ComponentType<{ bgColor: string }> = styled.div`
+export const AreaBase: ComponentType<{ bgColor: string, padTop: boolean }> = styled.div`
+  margin-top: ${p => !!p.padTop ? '2em' : '0'};
   padding: 2em 2em 0 2em;
   ${p => !!p.bgColor ? css`background-color: ${p.bgColor};` : ''}
   
@@ -173,7 +174,10 @@ const CodeBox: ComponentType<{ height: string, bigger: boolean }> = styled.div`
     margin: 0 !important;
   }
 `;
-const FooterLinkLabel = styled(Typography).attrs(p => ({className: 'footer-link-label'}))`
+const FooterLinkLabel = styled(Typography).attrs(p => ({
+  className: 'footer-link-label',
+  component: 'div'
+}))`
   &.footer-link-label {
     display: flex;
     flex-direction: row;
@@ -379,6 +383,7 @@ export const Footer: ComponentType<FooterProps> = ({
                                                    } = {}) => (
   <SectionGrid
     bgColor={bgColor}
+    padTop
     {...props}
   >
     <Section>
