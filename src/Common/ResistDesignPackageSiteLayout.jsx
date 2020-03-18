@@ -25,6 +25,7 @@ import GHRepo from '../App/Assets/Graphics/github-repo.svg';
 import GHRepoMessage from '../App/Assets/Graphics/github-repo-message.svg';
 import YouTubeIcon from '../App/Assets/Fonts/Drawic/youtube.svg';
 import ZapLogo from '../App/Assets/Graphics/zap-logo.svg';
+import {App} from '../App';
 
 SyntaxHighlighter.registerLanguage('plaintext', PlainTextLanguage);
 SyntaxHighlighter.registerLanguage('json', JSONLanguage);
@@ -103,15 +104,14 @@ const Title = styled(Typography).attrs(p => ({
 }))`
   
 `;
-const Description = styled(Typography).attrs(p => ({className: 'site-layout-description'}))`
-  text-align: center;
-  
-  &.site-layout-description {
-    margin: 0 0 2em 0;
-  }
-`;
-const SectionTitle = styled(Typography)`
+const SectionTitle = styled(Typography).attrs(({children = ''} = {}) => ({
+  component: 'a',
+  href: typeof children === 'string' ? `#${children}` : undefined,
+  name: typeof children === 'string' ? `${children}` : undefined
+}))`
   flex: 0 0 auto;
+  text-decoration: none;
+  color: unset;
 `;
 const SubSectionTitle = styled(SectionTitle).attrs(p => ({className: 'sub-section-title'}))`
   &.sub-section-title {
@@ -132,12 +132,8 @@ const SubSectionBox: ComponentType<{ alignItems: string, justifyContent: string 
 `;
 export const AreaBase: ComponentType<{ bgColor: string, padTop: boolean }> = styled.div`
   margin-top: ${p => !!p.padTop ? '2em' : '0'};
-  padding: 2em 2em 0 2em;
+  padding: 2em 2em 2em 2em;
   ${p => !!p.bgColor ? css`background-color: ${p.bgColor};` : ''}
-  
-  &:last-child {
-    padding-bottom: 2em;
-  }
 `;
 const AreaTitle = styled(SectionTitle).attrs(p => ({className: 'section-grid-title'}))`
   &.section-grid-title {
@@ -222,10 +218,6 @@ const FooterIcon = styled.span.attrs(p => ({className: `${p.className} drawic`})
 `;
 const FooterImageIcon = styled.img`
   width: 1em;
-`;
-const FooterCopyrightText = styled.span`
-  font-size: 0.75em;
-  opacity: 0.5;
 `;
 const FooterLink = ({
                       href = '',
@@ -361,30 +353,28 @@ export const CodeSample: ComponentType<{
 type FooterProps = {
   name: string,
   icon: ReactNode,
-  showCopyright: boolean,
   webAddressLink: string,
   bgColor: string,
+  licenseType: string,
   issuesLink: string,
   githubLink: string,
   twitterLink: string,
   facebookLink: string,
   instagramLink: string,
-  youtubeLink: string,
-  children: ReactNode
+  youtubeLink: string
 };
 export const Footer: ComponentType<FooterProps> = ({
                                                      name,
                                                      icon,
-                                                     showCopyright,
                                                      webAddressLink,
                                                      bgColor,
+                                                     licenseType,
                                                      issuesLink,
                                                      githubLink,
                                                      twitterLink,
                                                      facebookLink,
                                                      instagramLink,
                                                      youtubeLink,
-                                                     children,
                                                      ...props
                                                    } = {}) => (
   <SectionGrid
@@ -407,9 +397,17 @@ export const Footer: ComponentType<FooterProps> = ({
         >
           &nbsp;Issues
         </FooterLink>
-        <FooterBaseText>
-          {children}
-        </FooterBaseText>
+        {!!licenseType ? (
+          <FooterBaseText>
+            License:&nbsp;
+            <Typography
+              component='span'
+              color='secondary'
+            >
+              {licenseType}
+            </Typography>
+          </FooterBaseText>
+        ) : undefined}
       </SubSection>
     </Section>
     <Section>
@@ -421,16 +419,7 @@ export const Footer: ComponentType<FooterProps> = ({
           href={webAddressLink}
           icon={icon}
         >
-          {name}{!!showCopyright ? (
-          <FooterCopyrightText>
-            {!!name || !!icon ? (
-              <Fragment>
-                &nbsp;
-              </Fragment>
-            ) : undefined}
-            ©&nbsp;{CURRENT_FULL_YEAR}
-          </FooterCopyrightText>
-        ) : undefined}
+          {name}
         </FooterLink>
       </SubSection>
     </Section>
@@ -490,100 +479,84 @@ type AppBaseProps = {
   preTitle: ReactNode,
   title: ReactNode,
   postTitle: ReactNode,
-  description: ReactNode,
   children: ReactNode
 };
-
-export class AppBase extends Component<AppBaseProps> {
-  render() {
-    const {
-      logoSrc = ZapLogo,
-      repoLink = '',
-      preTitle = '',
-      title = '',
-      postTitle = '',
-      description = '',
-      children
-    } = this.props;
-
-    return (
-      <Fragment>
-        <GlobalStyle/>
-        <ThemeProvider
-          theme={THEME}
+export const AppBase: ComponentType<AppBaseProps> = ({
+                                                       logoSrc = ZapLogo,
+                                                       repoLink = '',
+                                                       preTitle = '',
+                                                       title = '',
+                                                       postTitle = '',
+                                                       children
+                                                     } = {}) => (
+  <Fragment>
+    <GlobalStyle/>
+    <ThemeProvider
+      theme={THEME}
+    >
+      <CssBaseline/>
+      <Base
+        display='flex'
+        flexDirection='column'
+        alignItems='stretch'
+        justifyContent='flex-start'
+      >
+        <HeaderBox
+          display='flex'
+          flexDirection='row'
+          alignItems='center'
+          justifyContent='flex-start'
         >
-          <CssBaseline/>
-          <Base
-            display='flex'
-            flexDirection='column'
-            alignItems='stretch'
-            justifyContent='flex-start'
+          <LogoImg
+            src={logoSrc}
+          />
+          <Title
+            variant='h5'
           >
-            <HeaderBox
-              display='flex'
-              flexDirection='row'
-              alignItems='center'
-              justifyContent='flex-start'
-            >
-              <LogoImg
-                src={logoSrc}
-              />
-              <Title
-                variant='h5'
-              >
-                {!!preTitle ? (
-                  <Fragment>
-                    <Title
-                      display='inline'
-                      variant='inherit'
-                      color='textSecondary'
-                    >
-                      {preTitle}
-                    </Title>
-                    &nbsp;
-                  </Fragment>
-                ) : undefined}
-                {title}
-                {!!postTitle ? (
-                  <Fragment>
-                    &nbsp;
-                    <Title
-                      display='inline'
-                      variant='inherit'
-                      color='textSecondary'
-                    >
-                      {postTitle}
-                    </Title>
-                  </Fragment>
-                ) : undefined}
-              </Title>
-            </HeaderBox>
-            {!!description ? (
-              <Area>
-                <Description>
-                  {description}
-                </Description>
-              </Area>
+            {!!preTitle ? (
+              <Fragment>
+                <Title
+                  display='inline'
+                  variant='inherit'
+                  color='textSecondary'
+                >
+                  {preTitle}
+                </Title>
+                &nbsp;
+              </Fragment>
             ) : undefined}
-            {children}
-          </Base>
-          <GHRepoCorner>
-            <GHRepoAnchor
-              target='_blank'
-              href={repoLink}
-            >
-              <GHRepoMessageCornerImg
-                src={GHRepoMessage}
-              />
-              <GHRepoCornerImg
-                src={GHRepo}
-              />
-            </GHRepoAnchor>
-          </GHRepoCorner>
-        </ThemeProvider>
-      </Fragment>
-    );
-  }
-}
+            {title}
+            {!!postTitle ? (
+              <Fragment>
+                &nbsp;
+                <Title
+                  display='inline'
+                  variant='inherit'
+                  color='textSecondary'
+                >
+                  {postTitle}
+                </Title>
+              </Fragment>
+            ) : undefined}
+          </Title>
+        </HeaderBox>
+        {children}
+      </Base>
+      <GHRepoCorner>
+        <GHRepoAnchor
+          target='_blank'
+          href={repoLink}
+        >
+          <GHRepoMessageCornerImg
+            src={GHRepoMessage}
+          />
+          <GHRepoCornerImg
+            src={GHRepo}
+          />
+        </GHRepoAnchor>
+      </GHRepoCorner>
+    </ThemeProvider>
+  </Fragment>
+);
 
 export default AppBase;

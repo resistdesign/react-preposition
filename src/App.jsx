@@ -1,6 +1,9 @@
 import {hot} from 'react-hot-loader';
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import styled from 'styled-components';
+import {
+  Typography
+} from '@material-ui/core';
 import MyLayout, {
   Over,
   Left,
@@ -35,33 +38,42 @@ export class App extends Component {
       <AppBase
         preTitle='React'
         title='Preposition'
-        description={(
-          <Fragment>
-            Create React layouts with&nbsp;
-            <svg viewBox="0 0 75 25" style={{
-              width: '2em',
-              marginLeft: '-0.25em',
-              marginRight: '-1.75em',
-              verticalAlign: 'bottom'
-            }}>
-              <path
-                d="M 0 25 L 0 22 C 30 18 45 16 75 20 C 40 21 30 23 0 25"
-                fill="#0096E4"
-              ></path>
-            </svg>
-            <span
-              style={{
-                color: '#FF9B00',
-                fontStyle: 'oblique'
-              }}
-            >pre</span>determined&nbsp;
-            <span style={{
-              color: '#FF9B00'
-            }}>positions</span>.
-          </Fragment>
-        )}
         repoLink='https://github.com/resistdesign/react-preposition'
       >
+        <SectionGrid
+          cols={1}
+        >
+          <Section>
+            <SubSection
+              alignItems='center'
+              justifyContent='center'
+            >
+              <Typography>
+                Create React layouts with&nbsp;
+                <svg viewBox="0 0 75 25" style={{
+                  width: '2em',
+                  marginLeft: '-0.25em',
+                  marginRight: '-1.75em',
+                  verticalAlign: 'bottom'
+                }}>
+                  <path
+                    d="M 0 25 L 0 22 C 30 18 45 16 75 20 C 40 21 30 23 0 25"
+                    fill="#0096E4"
+                  ></path>
+                </svg>
+                <span
+                  style={{
+                    color: '#FF9B00',
+                    fontStyle: 'oblique'
+                  }}
+                >pre</span>determined&nbsp;
+                <span style={{
+                  color: '#FF9B00'
+                }}>positions</span>.
+              </Typography>
+            </SubSection>
+          </Section>
+        </SectionGrid>
         <SectionGrid
           cols={2}
         >
@@ -231,6 +243,7 @@ const App => (props = {}) => (
             </SubSection>
           </Section>
         </SectionGrid>
+        <SectionGrid/>
         <Footer
           name='Resist Design'
           icon={(
@@ -240,18 +253,14 @@ const App => (props = {}) => (
               />
             </FooterLogoContainer>
           )}
-          showCopyright
-          bgColor='#333333'
           webAddressLink='https://resist.design'
+          bgColor='#333333'
+          licenseType='MIT'
           issuesLink='https://github.com/resistdesign/react-preposition/issues'
           githubLink='https://github.com/resistdesign'
           twitterLink='https://twitter.com/resistdesign'
           youtubeLink='https://www.youtube.com/channel/UCahEtsliyJbi-o4TR50Bcfw'
-        >
-          <small>
-            Feedback is always welcome.
-          </small>
-        </Footer>
+        />
       </AppBase>
     );
   }
