@@ -1,5 +1,6 @@
 import {hot} from 'react-hot-loader';
 import React, {Component, Fragment} from 'react';
+import styled from 'styled-components';
 import MyLayout, {
   Over,
   Left,
@@ -14,6 +15,10 @@ import AppBase, {
   SubSection
 } from './Common/ResistDesignPackageSiteLayout';
 import ZapLogo from './App/Assets/Graphics/zap-logo.svg';
+
+const FooterLogo = styled.img`
+  width: 3em;
+`;
 
 export class App extends Component {
   render() {
@@ -219,7 +224,7 @@ const App => (props = {}) => (
         </SectionGrid>
         <Footer
           name='Resist Design'
-          iconUrl={ZapLogo}
+          icon={<FooterLogo src={ZapLogo}/>}
           showCopyright
           bgColor='#333333'
         >

@@ -1,4 +1,5 @@
 import '../App/Assets/Fonts/Gasalt/stylesheet.css';
+import '../App/Assets/Fonts/Drawic/style.css';
 import React, {Component, ComponentType, Fragment} from 'react';
 import type {ReactNode} from 'react';
 import styled, {createGlobalStyle, css} from 'styled-components';
@@ -21,6 +22,7 @@ import PlainTextLanguage from 'react-syntax-highlighter/dist/esm/languages/hljs/
 import JSXLanguage from 'react-syntax-highlighter/dist/esm/languages/prism/jsx';
 import GHRepo from '../App/Assets/Graphics/github-repo.svg';
 import GHRepoMessage from '../App/Assets/Graphics/github-repo-message.svg';
+import YouTubeIcon from '../App/Assets/Fonts/Drawic/youtube.svg';
 import ZapLogo from '../App/Assets/Graphics/zap-logo.svg';
 
 SyntaxHighlighter.registerLanguage('plaintext', PlainTextLanguage);
@@ -114,16 +116,16 @@ const SubSectionTitle = styled(SectionTitle).attrs(p => ({className: 'sub-sectio
     margin: 0 0 1em 0;
   }
 `;
-const SubSectionBox = styled.div`
+const SubSectionBox: ComponentType<{ alignItems: string, justifyContent: string }> = styled.div`
   flex: 1 0 auto;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  justify-content: stretch;
+  align-items: ${p => !!p.alignItems ? p.alignItems : 'stretch'};
+  justify-content: ${p => !!p.justifyContent ? p.justifyContent : 'stretch'};
   padding: 1em;
   
   & > *:not(${SectionTitle}) {
-    flex: 1 0 auto;
+    ${p => p.justifyContent === 'stretch' ? css`flex: 1 0 auto;` : ''}
   }
 `;
 export const AreaBase: ComponentType<{ bgColor: string }> = styled.div`
@@ -171,10 +173,6 @@ const CodeBox: ComponentType<{ height: string, bigger: boolean }> = styled.div`
     margin: 0 !important;
   }
 `;
-const FooterLinkAnchor = styled.a`
-  text-decoration: none;
-  color: inherit;
-`;
 const FooterLinkLabel = styled(Typography).attrs(p => ({className: 'footer-link-label'}))`
   &.footer-link-label {
     display: flex;
@@ -183,14 +181,45 @@ const FooterLinkLabel = styled(Typography).attrs(p => ({className: 'footer-link-
     justify-content: flex-start;
   }
 `;
-const FooterIcon = styled.img`
-  width: 3em;
-  margin: 0 1em 0 0;
+const FooterLinkLabelText = styled.span`
+  
+`;
+const FooterLinkAnchor = styled.a`
+  flex: 0 0 auto;
+  text-decoration: none;
+  color: inherit;
+  padding: 0.5em;
+  
+  &:first-child {
+    padding-top: 0;
+  }
+  
+  &:last-child {
+    padding-bottom: 0;
+  }
+  
+  &:hover > ${FooterLinkLabel} > ${FooterLinkLabelText} {
+    color: #0096E4;
+  }
+`;
+const FooterIcon = styled.span.attrs(p => ({className: `${p.className} drawic`}))`
+  flex: 0 0 auto;
+  display: inline;
+  font-size: 2em;
+  
+  &:after {
+    content: ' ';
+    white-space: pre;
+    font-size: 0.5em;
+  }
+`;
+const FooterImageIcon = styled.img`
+  width: 1em;
 `;
 const FooterLink = ({
                       href = '',
-                      icon = '',
-                      children = '',
+                      icon,
+                      children,
                       ...props
                     } = {}) => !!href || true ? (
   <FooterLinkAnchor
@@ -198,17 +227,19 @@ const FooterLink = ({
     {...props}
   >
     <FooterLinkLabel>
-      {!!icon ? (
-        <FooterIcon
-          src={icon}
-        />
-      ) : undefined}
-      {!!children ? children : href}
+      {icon}
+      <FooterLinkLabelText>{!!children ? children : href}</FooterLinkLabelText>
     </FooterLinkLabel>
   </FooterLinkAnchor>
 ) : (
   <Fragment/>
 );
+const FooterBaseText = styled(Typography)`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+`;
 
 //**********
 // Exports
@@ -315,7 +346,7 @@ export const CodeSample: ComponentType<{
 );
 type FooterProps = {
   name: string,
-  iconUrl: string,
+  icon: ReactNode,
   showCopyright: boolean,
   webAddressLink: string,
   bgColor: string,
@@ -329,7 +360,7 @@ type FooterProps = {
 };
 export const Footer: ComponentType<FooterProps> = ({
                                                      name,
-                                                     iconUrl,
+                                                     icon,
                                                      showCopyright,
                                                      webAddressLink,
                                                      bgColor,
@@ -347,55 +378,79 @@ export const Footer: ComponentType<FooterProps> = ({
     {...props}
   >
     <Section>
-      <SubSection>
+      <SubSection
+        alignItems='flex-start'
+        justifyContent='space-between'
+      >
         <FooterLink
           href={issuesLink}
         >
           Issues
         </FooterLink>
-        {children}
+        <FooterBaseText>
+          {children}
+        </FooterBaseText>
       </SubSection>
     </Section>
     <Section>
-      <SubSection>
+      <SubSection
+        alignItems='center'
+        justifyContent='space-between'
+      >
+        <FooterBaseText/>
         <FooterLink
           href={webAddressLink}
-          icon={iconUrl}
+          icon={icon}
         >
-          {!!showCopyright ? (
-            <span>©&nbsp;</span>
-          ) : undefined}
           {name}
-          {!!showCopyright ? (
-            <span>&nbsp;{CURRENT_FULL_YEAR}</span>
-          ) : undefined}
         </FooterLink>
+        {!!showCopyright ? (
+          <FooterBaseText>© {CURRENT_FULL_YEAR}</FooterBaseText>
+        ) : (<FooterBaseText/>)}
       </SubSection>
     </Section>
     <Section>
-      <SubSection>
+      <SubSection
+        alignItems='flex-end'
+        justifyContent='space-between'
+      >
         <FooterLink
           href={githubLink}
+          icon={<FooterIcon
+            className='drawic-github'
+          />}
         >
           GitHub
         </FooterLink>
         <FooterLink
           href={twitterLink}
+          icon={<FooterIcon
+            className='drawic-twitter'
+          />}
         >
           Twitter
         </FooterLink>
         <FooterLink
           href={facebookLink}
+          icon={<FooterIcon
+            className='drawic-facebook'
+          />}
         >
           Facebook
         </FooterLink>
         <FooterLink
           href={instagramLink}
+          icon={<FooterIcon
+            className='drawic-instagram'
+          />}
         >
           Instagram
         </FooterLink>
         <FooterLink
           href={youtubeLink}
+          icon={<FooterIcon>
+            <FooterImageIcon src={YouTubeIcon}/>
+          </FooterIcon>}
         >
           YouTube
         </FooterLink>
