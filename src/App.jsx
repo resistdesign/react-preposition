@@ -8,10 +8,12 @@ import MyLayout, {
 } from './App/MyLayout';
 import AppBase, {
   CodeSample,
+  Footer,
   Section,
   SectionGrid,
   SubSection
 } from './Common/ResistDesignPackageSiteLayout';
+import ZapLogo from './App/Assets/Graphics/zap-logo.svg';
 
 export class App extends Component {
   render() {
@@ -215,6 +217,14 @@ const App => (props = {}) => (
             </SubSection>
           </Section>
         </SectionGrid>
+        <Footer
+          name='Resist Design'
+          iconUrl={ZapLogo}
+          showCopyright
+          bgColor='#333333'
+        >
+          Sweet!
+        </Footer>
       </AppBase>
     );
   }

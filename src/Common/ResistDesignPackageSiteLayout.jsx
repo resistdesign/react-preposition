@@ -28,6 +28,7 @@ SyntaxHighlighter.registerLanguage('json', JSONLanguage);
 SyntaxHighlighter.registerLanguage('bash', BashLanguage);
 PrismSyntaxHighlighter.registerLanguage('jsx', JSXLanguage);
 
+const CURRENT_FULL_YEAR = new Date().getFullYear();
 const THEME = createMuiTheme(SRACLMUITheme);
 const GlobalStyle = createGlobalStyle`
   html,
@@ -125,8 +126,9 @@ const SubSectionBox = styled.div`
     flex: 1 0 auto;
   }
 `;
-export const AreaBase = styled.div`
+export const AreaBase: ComponentType<{ bgColor: string }> = styled.div`
   padding: 2em 2em 0 2em;
+  ${p => !!p.bgColor ? css`background-color: ${p.bgColor};` : ''}
   
   &:last-child {
     padding-bottom: 2em;
@@ -169,6 +171,44 @@ const CodeBox: ComponentType<{ height: string, bigger: boolean }> = styled.div`
     margin: 0 !important;
   }
 `;
+const FooterLinkAnchor = styled.a`
+  text-decoration: none;
+  color: inherit;
+`;
+const FooterLinkLabel = styled(Typography).attrs(p => ({className: 'footer-link-label'}))`
+  &.footer-link-label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
+`;
+const FooterIcon = styled.img`
+  width: 3em;
+  margin: 0 1em 0 0;
+`;
+const FooterLink = ({
+                      href = '',
+                      icon = '',
+                      children = '',
+                      ...props
+                    } = {}) => !!href || true ? (
+  <FooterLinkAnchor
+    href={href}
+    {...props}
+  >
+    <FooterLinkLabel>
+      {!!icon ? (
+        <FooterIcon
+          src={icon}
+        />
+      ) : undefined}
+      {!!children ? children : href}
+    </FooterLinkLabel>
+  </FooterLinkAnchor>
+) : (
+  <Fragment/>
+);
 
 //**********
 // Exports
@@ -176,13 +216,16 @@ const CodeBox: ComponentType<{ height: string, bigger: boolean }> = styled.div`
 
 export const Area: ComponentType<{
   title: string,
+  bgColor: string,
   children: ReactNode
 }> = ({
         title = '',
+        bgColor,
         children,
         ...props
       } = {}) => (
   <AreaBase
+    bgColor={bgColor}
     {...props}
   >
     {!!title ? (<AreaTitle variant='h6'>{title}</AreaTitle>) : undefined}
@@ -192,13 +235,16 @@ export const Area: ComponentType<{
 export const SectionGrid: ComponentType<{
   title: string,
   cols: 1 | 2 | 3,
+  bgColor: string,
   children: ReactNode
 }> = ({
         cols = 3,
+        bgColor,
         children,
         ...props
       } = {}) => (
   <Area
+    bgColor={bgColor}
     {...props}
   >
     <SectionGridContent
@@ -266,6 +312,96 @@ export const CodeSample: ComponentType<{
         </PrismSyntaxHighlighter>
       )}
   </CodeBox>
+);
+type FooterProps = {
+  name: string,
+  iconUrl: string,
+  showCopyright: boolean,
+  webAddressLink: string,
+  bgColor: string,
+  issuesLink: string,
+  githubLink: string,
+  twitterLink: string,
+  facebookLink: string,
+  instagramLink: string,
+  youtubeLink: string,
+  children: ReactNode
+};
+export const Footer: ComponentType<FooterProps> = ({
+                                                     name,
+                                                     iconUrl,
+                                                     showCopyright,
+                                                     webAddressLink,
+                                                     bgColor,
+                                                     issuesLink,
+                                                     githubLink,
+                                                     twitterLink,
+                                                     facebookLink,
+                                                     instagramLink,
+                                                     youtubeLink,
+                                                     children,
+                                                     ...props
+                                                   } = {}) => (
+  <SectionGrid
+    bgColor={bgColor}
+    {...props}
+  >
+    <Section>
+      <SubSection>
+        <FooterLink
+          href={issuesLink}
+        >
+          Issues
+        </FooterLink>
+        {children}
+      </SubSection>
+    </Section>
+    <Section>
+      <SubSection>
+        <FooterLink
+          href={webAddressLink}
+          icon={iconUrl}
+        >
+          {!!showCopyright ? (
+            <span>©&nbsp;</span>
+          ) : undefined}
+          {name}
+          {!!showCopyright ? (
+            <span>&nbsp;{CURRENT_FULL_YEAR}</span>
+          ) : undefined}
+        </FooterLink>
+      </SubSection>
+    </Section>
+    <Section>
+      <SubSection>
+        <FooterLink
+          href={githubLink}
+        >
+          GitHub
+        </FooterLink>
+        <FooterLink
+          href={twitterLink}
+        >
+          Twitter
+        </FooterLink>
+        <FooterLink
+          href={facebookLink}
+        >
+          Facebook
+        </FooterLink>
+        <FooterLink
+          href={instagramLink}
+        >
+          Instagram
+        </FooterLink>
+        <FooterLink
+          href={youtubeLink}
+        >
+          YouTube
+        </FooterLink>
+      </SubSection>
+    </Section>
+  </SectionGrid>
 );
 
 type AppBaseProps = {
