@@ -44,6 +44,7 @@ const GlobalStyle = createGlobalStyle`
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
+    overscroll-behavior: none;
   }
 `;
 const Base = styled(Box)`
@@ -143,11 +144,12 @@ const AreaTitle = styled(SectionTitle).attrs(p => ({className: 'section-grid-tit
     margin: 0 0 1em 0;
   }
 `;
-const SectionGridContent: ComponentType<{ cols: 1 | 2 | 3 }> = styled.div`
+const SectionGridContent: ComponentType<{ cols: 1 | 2 | 3, minHeight: string }> = styled.div`
   display: grid;
   grid-template-columns: ${p => [...new Array(p.cols || 3)].map(x => '1fr').join(' ')};
   grid-gap: 1em;
   box-sizing: border-box;
+  ${p => !!p.minHeight ? css`min-height: ${p.minHeight};` : ''}
   
   @media (max-width: 1024px) {
     grid-template-columns: ${p => [...new Array(((p.cols || 3) - 1) || 1)].map(x => '1fr').join(' ')};
@@ -276,10 +278,12 @@ export const SectionGrid: ComponentType<{
   title: string,
   cols: 1 | 2 | 3,
   bgColor: string,
+  minHeight: string,
   children: ReactNode
 }> = ({
         cols = 3,
         bgColor,
+        minHeight,
         children,
         ...props
       } = {}) => (
@@ -289,6 +293,7 @@ export const SectionGrid: ComponentType<{
   >
     <SectionGridContent
       cols={cols}
+      minHeight={minHeight}
     >
       {children}
     </SectionGridContent>
@@ -432,7 +437,7 @@ export const Footer: ComponentType<FooterProps> = ({
     <Section>
       <SubSection
         alignItems='flex-end'
-        justifyContent='space-between'
+        justifyContent='flex-end'
       >
         <FooterLink
           href={githubLink}
