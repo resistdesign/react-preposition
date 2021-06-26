@@ -1,2 +1,7 @@
 .idea/
+.parcel-cache/
+*.log
+.DS_Store
 node_modules/
+.cache/
+dist/
