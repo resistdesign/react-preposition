@@ -395,6 +395,7 @@ type AppBaseProps = {
   preTitle?: ReactNode;
   title?: ReactNode;
   postTitle?: ReactNode;
+  additionalHeaderContent?: ReactNode;
 };
 export const AppBase: FC<AppBaseProps> = ({
                                             logoSrc = ZapLogo,
@@ -403,6 +404,7 @@ export const AppBase: FC<AppBaseProps> = ({
                                             title = '',
                                             postTitle = '',
                                             children,
+                                            additionalHeaderContent,
                                           } = {}) => (
   <Fragment>
     <GlobalStyle />
@@ -430,6 +432,7 @@ export const AppBase: FC<AppBaseProps> = ({
               </Fragment>
             ) : undefined}
           </Title>
+          {additionalHeaderContent}
         </HeaderBox>
         {children}
       </Base>

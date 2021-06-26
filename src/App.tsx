@@ -7,7 +7,21 @@ import MyLayout, { Left, Over, Right, Under } from './App/MyLayout';
 import AppBase, { CodeSample, Footer, Section, SectionGrid, SubSection } from './Common/ResistDesignPackageSiteLayout';
 import ReactPrepositionLogo from 'url:./App/Assets/Graphics/React_Preposition_Logo_2020.svg';
 import ZapLogo from 'url:./App/Assets/Graphics/zap-logo.svg';
+import TSLogo from 'url:./App/Assets/Graphics/ts-logo-round-128.svg';
 
+const LogoDivider = styled.div`
+  flex: 0 0 auto;
+  display: inline-block;
+  width: 0.015em;
+  height: 2.5em;
+  padding: 0;
+  box-sizing: border-box;
+  margin: 0 1em;
+  background-color: #ffffff;
+`;
+const SupportedTechImage = styled.img`
+  max-width: 2em;
+`;
 const FooterLogoContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -29,6 +43,10 @@ export class App extends Component {
         title='Preposition'
         logoSrc={ReactPrepositionLogo}
         repoLink='https://github.com/resistdesign/react-preposition'
+        additionalHeaderContent={<>
+          <LogoDivider />
+          <SupportedTechImage alt='Supports TypeScript' src={TSLogo} />
+        </>}
       >
         <SectionGrid
           cols={1}
