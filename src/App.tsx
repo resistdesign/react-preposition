@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { Typography } from '@material-ui/core';
 import MyLayout, { Left, Over, Right, Under } from './App/MyLayout';
 import AppBase, { CodeSample, Footer, Section, SectionGrid, SubSection } from './Common/ResistDesignPackageSiteLayout';
-import ReactPrepositionLogo from 'url:./App/Assets/Graphics/React Preposition Logo 2020.svg';
+import ReactPrepositionLogo from 'url:./App/Assets/Graphics/React_Preposition_Logo_2020.svg';
 import ZapLogo from 'url:./App/Assets/Graphics/zap-logo.svg';
 
 const FooterLogoContainer = styled.div`

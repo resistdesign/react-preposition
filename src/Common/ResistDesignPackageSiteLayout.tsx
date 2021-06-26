@@ -288,7 +288,7 @@ export const CodeSample: FC<{
   language?: 'plaintext' | 'bash' | 'json' | 'jsx';
   height?: string;
   [key: string]: any;
-}> = ({ language = 'plaintext', height = '1em', children, ...props } = {}) => (
+}> = ({ language = 'plaintext', height = 'auto', children, ...props } = {}) => (
   <CodeBox height={height} bigger={language === 'plaintext' || language === 'bash'}>
     {language !== 'jsx' ? (
       <SyntaxHighlighter language={language} style={StandardCodeTheme} showLineNumbers wrapLines {...props}>
