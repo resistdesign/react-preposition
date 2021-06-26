@@ -8,10 +8,4 @@ Create React layouts with predetermined positions.
 
 ---
 
-<style>
-img[alt="Supports TypeScript"] {
-  max-width: 2em;
-}
-</style>
-
-![Supports TypeScript](./src/App/Assets/Graphics/ts-logo-round-128.svg)
+<img style="max-width: 2em;" alt="Supports TypeScript" src="./src/App/Assets/Graphics/ts-logo-round-128.svg"/>
