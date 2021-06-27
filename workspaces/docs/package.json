@@ -1,29 +1,6 @@
 {
   "name": "@react-preposition/docs",
   "version": "0.0.0",
-  "description": "Create React layouts with predetermined positions.",
-  "license": "MIT",
-  "author": "Resist Design",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
-  "files": [
-    "dist",
-    "src"
-  ],
-  "engines": {
-    "node": ">=10"
-  },
-  "module": "dist/react-preposition.esm.js",
-  "size-limit": [
-    {
-      "path": "dist/react-preposition.cjs.production.min.js",
-      "limit": "10 KB"
-    },
-    {
-      "path": "dist/react-preposition.esm.js",
-      "limit": "10 KB"
-    }
-  ],
   "scripts": {
     "start": "parcel ./src/index.html",
     "build:docs": "parcel build ./src/index.html --dist-dir ../../docs/ --target web"
@@ -49,19 +26,6 @@
     "tslib": "^2.3.0",
     "typescript": "^4.3.4"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/resistdesign/react-preposition.git"
-  },
-  "bugs": {
-    "url": "https://github.com/resistdesign/react-preposition/issues"
-  },
-  "homepage": "https://github.com/resistdesign/react-preposition#readme",
-  "keywords": [
-    "React",
-    "Layout",
-    "Position"
-  ],
   "prettier": {
     "printWidth": 150,
     "semi": true,
