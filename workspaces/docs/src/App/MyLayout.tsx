@@ -1,5 +1,5 @@
 import React from 'react';
-import { createLayout, createLayoutPosition } from '@react-preposition/lib';
+import { createLayout, createLayoutPosition } from 'react-preposition';
 
 export const Over = createLayoutPosition();
 export const Left = createLayoutPosition();

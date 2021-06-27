@@ -1,5 +1,5 @@
 {
-  "name": "@react-preposition/lib",
+  "name": "react-preposition",
   "version": "1.0.1",
   "description": "Create React layouts with predetermined positions.",
   "license": "MIT",
@@ -7,8 +7,7 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "engines": {
     "node": ">=10"

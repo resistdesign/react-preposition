@@ -9,7 +9,7 @@
   "devDependencies": {
     "@material-ui/core": "^4.9.5",
     "@material-ui/icons": "^4.9.1",
-    "@react-preposition/lib": "^1.0.1",
+    "react-preposition": "^1.0.1",
     "@resistdesign/sracl-mui-theme": "^1.1.0",
     "@types/react": "^17.0.11",
     "@types/react-dom": "^17.0.8",
