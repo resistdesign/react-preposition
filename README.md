@@ -8,4 +8,4 @@ Create React layouts with predetermined positions.
 
 ---
 
-![Supports TypeScript](./src/App/Assets/Graphics/ts-logo-round-small.svg)
+![Supports TypeScript](./workspaces/docs/src/App/Assets/Graphics/ts-logo-round-small.svg?raw=true)
