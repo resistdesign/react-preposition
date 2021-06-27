@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "start": "parcel ./src/index.html",
-    "build:docs": "parcel build ./src/index.html --dist-dir ../../docs/ --target web"
+    "build:docs": "parcel build ./src/index.html --dist-dir ../../docs/ --target web && cp ../../CNAME ../../docs/CNAME"
   },
   "dependencies": {},
   "devDependencies": {
