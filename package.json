@@ -1,40 +1,12 @@
 {
   "name": "react-preposition",
-  "version": "1.0.1",
-  "description": "Create React layouts with predetermined positions.",
-  "main": "src/Utils/ReactPreposition.jsx",
-  "files": [
-    "src/Utils/ReactPreposition.jsx"
-  ],
-  "scripts": {
-    "site": "rdx compile -o docs && cp CNAME ./docs/CNAME"
-  },
-  "author": "Resist Design",
+  "version": "0.0.0",
+  "main": "index.js",
   "license": "MIT",
-  "dependencies": {
-    "@material-ui/icons": "^4.9.1",
-    "react": "^16.13.0"
-  },
-  "devDependencies": {
-    "@material-ui/core": "^4.9.5",
-    "@resistdesign/sracl-mui-theme": "^1.1.0",
-    "flow-bin": "^0.120.1",
-    "raw-loader": "^4.0.0",
-    "react-dom": "^16.13.0",
-    "react-syntax-highlighter": "^12.2.1",
-    "styled-components": "^5.0.1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/resistdesign/react-preposition.git"
-  },
-  "bugs": {
-    "url": "https://github.com/resistdesign/react-preposition/issues"
-  },
-  "homepage": "https://github.com/resistdesign/react-preposition#readme",
-  "keywords": [
-    "React",
-    "Layout",
-    "Position"
-  ]
+  "private": true,
+  "workspaces": [
+    "workspaces/*"
+  ],
+  "repository": "git@github.com:resistdesign/react-preposition.git",
+  "author": "Resist Design"
 }
