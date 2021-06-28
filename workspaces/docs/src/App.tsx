@@ -155,8 +155,8 @@ export const MyLayout = createLayout((props = {}) => (<div>...</div>));
                 {`// MyLayout.jsx
 import React from 'react';
 import {
-  createLayout,
-  createLayoutArea
+  createLayoutPosition,
+  createLayout
 } from '../Utils/ReactPreposition';`}
               </CodeSample>
             </SubSection>
